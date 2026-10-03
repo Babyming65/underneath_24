@@ -2,24 +2,30 @@
   "works": [
     {
       "title": "ตัวอย่าง: Track day",
-      "type": "photo",
+      "title_en": "",
+      "type": "video",
       "sub": "R33_THEPIG",
+      "sub_en": "",
       "src": "/images/4.webp",
-      "video": "",
+      "video": "https://www.instagram.com/reel/DcIjBe7soyi/?stkn=enV3YXQzMzE5cWV6",
       "featured": true
     },
     {
       "title": "ตัวอย่าง: Car meet",
+      "title_en": "",
       "type": "event",
       "sub": "ลบอันนี้ได้",
+      "sub_en": "",
       "src": "",
       "video": "",
       "featured": false
     },
     {
       "title": "ตัวอย่าง: Rolling shot",
+      "title_en": "",
       "type": "video",
       "sub": "LOOPR",
+      "sub_en": "",
       "src": "/images/Screenshot 2569-10-03 at 13.18.31.webp",
       "video": "https://www.instagram.com/reel/DTNPywTE1Zt/?stkn=MWI1NHoyODB3ZXZjZA==",
       "featured": false
