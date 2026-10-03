@@ -61,3 +61,27 @@ collections:
               - { name: features, label: รายการที่ได้รับ (กดเพิ่มทีละบรรทัด), widget: list, required: false }
               - { name: highlight, label: เน้นเป็นแพ็กเกจแนะนำ, widget: boolean, default: false, required: false }
           - { name: note, label: หมายเหตุท้ายตาราง (เช่น มัดจำ ค่าเดินทาง), widget: text, required: false }
+      - name: site
+        label: ข้อความและตั้งค่าเว็บ
+        file: data/site.json
+        fields:
+          - { name: brand, label: ชื่อโลโก้ (จุด . จะเป็นสีแดง), widget: string, required: false }
+          - { name: hero_title, label: หัวข้อใหญ่หน้าแรก, widget: string, required: false }
+          - { name: hero_subtitle, label: ข้อความใต้หัวข้อใหญ่, widget: string, required: false }
+          - { name: nav_work, label: เมนู - ผลงาน, widget: string, required: false }
+          - { name: nav_pricing, label: เมนู - ราคา, widget: string, required: false }
+          - { name: nav_about, label: เมนู - เกี่ยวกับ, widget: string, required: false }
+          - { name: nav_contact, label: เมนู - ติดต่อ, widget: string, required: false }
+          - { name: f_all, label: ปุ่มกรอง - ทั้งหมด, widget: string, required: false }
+          - { name: f_photo, label: ปุ่มกรอง - รูปถ่าย, widget: string, required: false }
+          - { name: f_video, label: ปุ่มกรอง - วิดีโอ, widget: string, required: false }
+          - { name: f_event, label: ปุ่มกรอง - Event, widget: string, required: false }
+          - { name: count_label, label: คำต่อท้ายจำนวนงาน (เช่น ผลงาน), widget: string, required: false }
+          - { name: about_heading, label: เกี่ยวกับ - หัวข้อ, widget: string, required: false }
+          - { name: about_text, label: เกี่ยวกับ - เนื้อหา (ถ้าเว้นว่าง ส่วนเกี่ยวกับจะไม่แสดง), widget: text, required: false }
+          - { name: about_image, label: เกี่ยวกับ - รูปโปรไฟล์หรือรูปทีม, widget: image, required: false }
+          - { name: about_points, label: เกี่ยวกับ - รายการสั้นๆ (กดเพิ่มทีละบรรทัด), widget: list, required: false }
+          - { name: pricing_cta, label: ปุ่มในการ์ดราคา, widget: string, required: false }
+          - { name: contact_heading, label: ส่วนท้าย - หัวข้อ, widget: text, required: false }
+          - { name: contact_button, label: ส่วนท้าย - ข้อความปุ่ม, widget: string, required: false }
+          - { name: instagram_url, label: ลิงก์ปุ่ม (Instagram หรือ LINE ก็ได้), widget: string, required: false }
