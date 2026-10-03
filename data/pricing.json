@@ -5,8 +5,8 @@
   "intro_en": "Starting price. Adjusted based on location, number of vehicles, and duration. Feel free to message for details.",
   "packages": [
     {
-      "name": "ตัวอย่าง: รูป + วิดีโอสั้น",
-      "name_en": "",
+      "name": "รูป + วิดีโอสั้น",
+      "name_en": "Photos + Short Video",
       "price": "7500",
       "unit": "บาท / คัน",
       "unit_en": "THB / vehicle",
@@ -23,33 +23,42 @@
       "highlight": true
     },
     {
-      "name": "ตัวอย่าง: ถ่ายรูป 1 คัน",
-      "name_en": "",
-      "price": "3,000",
+      "name": "ถ่ายรูป 1 คัน",
+      "name_en": "Photography for 1 vehicle",
+      "price": "4000",
       "unit": "บาท / คัน",
-      "unit_en": "",
+      "unit_en": "THB / vehicle",
       "features": [
         "ถ่ายประมาณ 1–2 ชั่วโมง",
         "แต่งภาพ 15 รูป",
         "ส่งไฟล์ภายใน 3 วัน"
       ],
-      "features_en": [],
+      "features_en": [
+        "Estimated shooting time: 1–2 hours",
+        "15 edited photos",
+        "Delivery within 3 days"
+      ],
       "highlight": false
     },
     {
-      "name": "ตัวอย่าง: คัฟเวอร์อีเวนต์",
-      "name_en": "",
-      "price": "สอบถาม",
-      "unit": "ตามเวลาและขนาดงาน",
-      "unit_en": "",
+      "name": "ถ่ายวิดีโอ 1 คัน",
+      "name_en": "Videography for 1 vehicle",
+      "price": "4000",
+      "unit": "บาท / คัน",
+      "unit_en": "THB / vehicle",
       "features": [
-        "ถ่ายรูปและวิดีโอทั้งงาน",
-        "ไฮไลต์ภายใน 7 วัน"
+        "ถ่ายประมาณ 1–2 ชั่วโมง",
+        "วิดีโอ Reels 1 คลิป",
+        "ส่งไฟล์ภายใน 3 วัน"
       ],
-      "features_en": [],
+      "features_en": [
+        "Estimated filming time: 1–2 hours",
+        "1 Reels video",
+        "Delivery within 3 days"
+      ],
       "highlight": false
     }
   ],
-  "note": "ตัวอย่างข้อความหมายเหตุ เช่น มัดจำ 50% / ค่าเดินทางต่างจังหวัดคิดเพิ่ม",
-  "note_en": ""
+  "note": "มัดจำ 50% ก่อนถ่ายทุกกรณี",
+  "note_en": "A 50% deposit is required before the shoot in all cases."
 }
