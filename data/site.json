@@ -21,5 +21,22 @@
   "pricing_cta": "สอบถามคิวและรายละเอียด",
   "contact_heading": "มีงานอยากถ่าย?\nคุยกันได้เลย",
   "contact_button": "ทักผ่าน Instagram",
-  "instagram_url": "https://instagram.com/underneath_media"
+  "instagram_url": "https://instagram.com/underneath_media",
+  "hero_title_en": "UNDERNEATH MEDIA",
+  "hero_subtitle_en": "",
+  "nav_work_en": "",
+  "nav_pricing_en": "",
+  "nav_about_en": "",
+  "nav_contact_en": "",
+  "f_all_en": "",
+  "f_photo_en": "",
+  "f_video_en": "",
+  "f_event_en": "",
+  "count_label_en": "",
+  "about_heading_en": "",
+  "about_text_en": "",
+  "about_points_en": [],
+  "pricing_cta_en": "",
+  "contact_heading_en": "",
+  "contact_button_en": ""
 }
