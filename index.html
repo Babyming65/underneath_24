@@ -49,6 +49,7 @@ dialog::backdrop{background:rgba(8,9,11,.92)}
 .lb{display:grid;place-items:center;width:100%;height:100%;padding:56px 16px 16px}
 .lb img,.lb video,.lb iframe{max-width:100%;max-height:100%;border-radius:4px}
 .lb iframe{width:min(1100px,100%);aspect-ratio:16/9;border:0}
+.lb iframe.ig{width:min(440px,100%);height:min(88vh,780px);aspect-ratio:auto;background:#fff}
 .x{position:fixed;top:14px;right:18px;z-index:2;background:#fff;border:0;border-radius:50%;width:42px;height:42px;font-size:1.3rem;cursor:pointer}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 @media (max-width:600px){.hero{aspect-ratio:4/5}nav a:not(:last-child){display:none}}
@@ -99,6 +100,8 @@ let filter = "all";
 function embed(url){
   const yt = url.match(/(?:youtu\.be\/|v=)([\w-]{11})/);
   if (yt) return `<iframe src="https://www.youtube.com/embed/${yt[1]}?autoplay=1" allow="autoplay;fullscreen" allowfullscreen></iframe>`;
+  const ig = url.match(/instagram\.com\/(?:[\w.]+\/)?(reels?|p|tv)\/([\w-]+)/);
+  if (ig) return `<iframe class="ig" src="https://www.instagram.com/${ig[1]==="reels"?"reel":ig[1]}/${ig[2]}/embed" allowfullscreen scrolling="no"></iframe>`;
   const vm = url.match(/vimeo\.com\/(\d+)/);
   if (vm) return `<iframe src="https://player.vimeo.com/video/${vm[1]}?autoplay=1" allow="autoplay;fullscreen" allowfullscreen></iframe>`;
   if (/\.(mp4|webm|mov)$/i.test(url)) return `<video src="${url}" controls autoplay></video>`;
@@ -121,7 +124,7 @@ function render(){
   if(!list.length){ $("grid").innerHTML = '<p class="empty">ยังไม่มีผลงานในหมวดนี้</p>'; return; }
   list.forEach(w=>{
     const b = document.createElement("button");
-    b.className = "item"; const t=thumb(w); b.style.setProperty("--r", w.video?"16/9":(t?"auto":"3/2"));
+    b.className = "item"; const t=thumb(w); b.style.setProperty("--r", w.video?(w.src?"auto":"16/9"):(t?"auto":"3/2"));
     b.setAttribute("aria-label", w.title);
     b.innerHTML = (t ? `<img loading="lazy" src="${t}" alt="${w.title}">` : `<div class="ph"></div>`)
       + `<span class="tag">${LABEL[w.type]}</span>` + (w.video ? '<span class="play"></span>' : "")
