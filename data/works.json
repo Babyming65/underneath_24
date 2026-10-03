@@ -1,17 +1,6 @@
 {
   "works": [
     {
-      "title": "HFTH25",
-      "title_en": "HFTH25",
-      "type": "video",
-      "sub": "",
-      "sub_en": "",
-      "src": "/images/Screenshot 2569-10-03 at 23.18.42.webp",
-      "album": [],
-      "video": "https://www.instagram.com/reel/DSpPrL8E7SS/",
-      "featured": false
-    },
-    {
       "title": "PTRS_Endless X Katoworks R33Thepig GTMC",
       "title_en": "PTRS_Endless X Katoworks R33Thepig GTMC",
       "type": "video",
@@ -23,8 +12,8 @@
       "featured": true
     },
     {
-      "title": "ตัวอย่าง: Photo Shoot",
-      "title_en": "",
+      "title": "DREAM_RX7",
+      "title_en": "DREAM_RX7",
       "type": "photo",
       "sub": "",
       "sub_en": "",
@@ -41,14 +30,25 @@
       "featured": false
     },
     {
-      "title": "ตัวอย่าง: Rolling shot",
-      "title_en": "",
+      "title": "Rolling EK9_LOOPR",
+      "title_en": "Rolling EK9_LOOPR",
       "type": "video",
-      "sub": "LOOPR",
+      "sub": "",
       "sub_en": "",
       "src": "/images/Screenshot 2569-10-03 at 13.18.31.webp",
       "album": [],
       "video": "https://www.instagram.com/reel/DTNPywTE1Zt/?stkn=MWI1NHoyODB3ZXZjZA==",
+      "featured": false
+    },
+    {
+      "title": "HFTH25",
+      "title_en": "HFTH25",
+      "type": "video",
+      "sub": "",
+      "sub_en": "",
+      "src": "/images/Screenshot 2569-10-03 at 23.18.42.webp",
+      "album": [],
+      "video": "https://www.instagram.com/reel/DSpPrL8E7SS/",
       "featured": false
     }
   ]
