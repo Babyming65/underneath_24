@@ -1,0 +1,7 @@
+{
+  "works": [
+    { "title": "ตัวอย่าง: Track day", "type": "photo", "sub": "ลบอันนี้ได้", "featured": true },
+    { "title": "ตัวอย่าง: Rolling shot", "type": "video", "sub": "ลบอันนี้ได้", "video": "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
+    { "title": "ตัวอย่าง: Car meet", "type": "event", "sub": "ลบอันนี้ได้" }
+  ]
+}
