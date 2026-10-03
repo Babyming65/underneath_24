@@ -103,26 +103,35 @@ footer h2{white-space:pre-line}
 
 /* ---- sliders + language ---- */
 nav{display:flex;align-items:center}
-.lang{order:2;margin-left:20px;border:1.5px solid var(--line);background:none;border-radius:99px;padding:5px 12px;font:600 .85rem var(--font-b);cursor:pointer;color:var(--ink)}
-.lang:hover{border-color:var(--ink)}
+.lang{order:2;margin-left:20px;position:relative;display:inline-grid;grid-template-columns:1fr 1fr;width:76px;height:32px;padding:0;border:1.5px solid var(--line);border-radius:99px;background:none;cursor:pointer;font:700 .78rem var(--font-b);color:var(--mute)}
+.lang span{position:relative;z-index:1;display:grid;place-items:center;transition:color .3s}
+.lang::before{content:"";position:absolute;top:3px;bottom:3px;left:3px;width:calc(50% - 3px);border-radius:99px;background:var(--ink);transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.lang[aria-checked=true]::before{transform:translateX(100%)}
+.lang[aria-checked=false] .th,.lang[aria-checked=true] .en{color:var(--bg)}
 .arrows{display:flex;gap:8px;margin-left:14px}
 .arrows button{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--line);background:none;color:var(--ink);cursor:pointer;font-size:1.3rem;line-height:1}
 .arrows button:not(:disabled):hover{border-color:var(--ink)}
 .arrows button:disabled{opacity:.3;cursor:default}
-.grid{columns:auto;display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:clamp(16px,4vw,48px);scrollbar-width:none;overscroll-behavior-x:contain}
+.grid.slider{columns:auto;display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:clamp(16px,4vw,48px);scrollbar-width:none;overscroll-behavior-x:contain}
 .grid::-webkit-scrollbar,.pr-grid::-webkit-scrollbar{display:none}
-.item{flex:0 0 auto;width:auto;height:clamp(240px,58vh,520px);margin:0;scroll-snap-align:start}
-.item img,.item .ph{height:100%;width:auto;aspect-ratio:var(--r,3/2);object-fit:cover}
+.grid.slider .item{flex:0 0 auto;width:auto;height:clamp(240px,58vh,520px);margin:0;scroll-snap-align:start}
+.grid.slider .item img,.grid.slider .item .ph{height:100%;width:auto;aspect-ratio:var(--r,3/2);object-fit:cover}
 .empty{padding:20px 0}
 .pr-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
 .pr-grid{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;margin:28px calc(-1*clamp(16px,4vw,48px)) 0;padding:0 clamp(16px,4vw,48px) 8px;scroll-padding-left:clamp(16px,4vw,48px);scrollbar-width:none;overscroll-behavior-x:contain}
 .pk{flex:0 0 min(320px,84%);scroll-snap-align:start}
+.more{position:absolute;left:10px;top:10px;z-index:1;background:rgba(0,0,0,.62);color:#fff;font:600 .78rem var(--font-b);padding:5px 12px;border-radius:99px;backdrop-filter:blur(4px)}
+.al{display:flex;flex-direction:column;align-items:center;gap:10px;max-height:100%;min-height:0}
+.al img{max-width:100%;max-height:calc(100vh - 150px);object-fit:contain}
+.al figcaption{display:flex;justify-content:space-between;gap:16px;width:100%;max-width:1100px;color:#fff;font-size:.9rem;opacity:.85}
+.nv{position:fixed;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;border:0;background:#fff;color:#111;font-size:1.6rem;line-height:1;cursor:pointer;z-index:2}
+.nv.p{left:16px}.nv.n{right:16px}
 </style>
 </head>
 <body>
 <header>
-  <a class="logo" id="logo" href="#top">UNDERNEATH<b>.</b>MEDIA</a>
-  <nav><button class="lang" id="lang" type="button">EN</button><a href="#work" data-t="nav_work">ผลงาน</a><a href="#pricing" data-t="nav_pricing">ราคา</a><a href="#about" id="navAbout" data-t="nav_about" hidden>เกี่ยวกับ</a><a href="#contact" data-t="nav_contact">ติดต่อ</a></nav>
+  <a class="logo" id="logo" href="#top">UNDERNEATH.MEDIA</a>
+  <nav><button class="lang" id="lang" type="button" role="switch" aria-checked="false" aria-label="ภาษา / Language"><span class="th">TH</span><span class="en">EN</span></button><a href="#work" data-t="nav_work">ผลงาน</a><a href="#pricing" data-t="nav_pricing">ราคา</a><a href="#about" id="navAbout" data-t="nav_about" hidden>เกี่ยวกับ</a><a href="#contact" data-t="nav_contact">ติดต่อ</a></nav>
 </header>
 
 <main id="top">
@@ -140,7 +149,7 @@ nav{display:flex;align-items:center}
       <button class="chip" data-f="video" data-t="f_video" aria-pressed="false">วิดีโอ</button>
       <button class="chip" data-f="event" data-t="f_event" aria-pressed="false">Event</button>
       <span class="count" id="count"></span>
-      <span class="arrows"><button type="button" data-sl="p" data-for="grid">&#8249;</button><button type="button" data-sl="n" data-for="grid">&#8250;</button></span>
+      <span class="arrows" id="gridArrows"><button type="button" data-sl="p" data-for="grid">&#8249;</button><button type="button" data-sl="n" data-for="grid">&#8250;</button></span>
     </div>
     <div class="grid" id="grid"></div>
   </section>
@@ -175,8 +184,8 @@ try{ lang=localStorage.getItem("lang")==="en"?"en":"th"; }catch(e){}
 const $ = id => document.getElementById(id);
 const S = {};
 const DEF = {
- th:{brand:"UNDERNEATH.MEDIA",hero_title:"Cars, caught in motion",hero_subtitle:"ถ่ายรูปและวิดีโอรถ · Track · Street · Event",nav_work:"ผลงาน",nav_pricing:"ราคา",nav_about:"เกี่ยวกับ",nav_contact:"ติดต่อ",f_all:"ทั้งหมด",f_photo:"รูปถ่าย",f_video:"วิดีโอ",f_event:"Event",count_label:"ผลงาน",about_heading:"เกี่ยวกับ",contact_heading:"มีงานอยากถ่าย?\nคุยกันได้เลย",contact_button:"ทักผ่าน Instagram",pricing_cta:"สอบถามคิวและรายละเอียด",pr_heading:"เรทราคา",empty:"ยังไม่มีผลงานในหมวดนี้",fail:"โหลดผลงานไม่สำเร็จ",novid:"ยังไม่ได้ใส่ลิงก์วิดีโอ",prev:"ก่อนหน้า",next:"ถัดไป",close:"ปิด"},
- en:{brand:"UNDERNEATH.MEDIA",hero_title:"Cars, caught in motion",hero_subtitle:"Car photo & video · Track · Street · Event",nav_work:"Work",nav_pricing:"Pricing",nav_about:"About",nav_contact:"Contact",f_all:"All",f_photo:"Photos",f_video:"Videos",f_event:"Events",count_label:"works",about_heading:"About",contact_heading:"Got a shoot in mind?\nLet's talk",contact_button:"Message on Instagram",pricing_cta:"Ask about dates & details",pr_heading:"Pricing",empty:"No works in this category yet",fail:"Couldn't load works",novid:"No video link yet",prev:"Previous",next:"Next",close:"Close"}
+ th:{brand:"UNDERNEATH.MEDIA",hero_title:"Cars, caught in motion",hero_subtitle:"ถ่ายรูปและวิดีโอรถ · Track · Street · Event",nav_work:"ผลงาน",nav_pricing:"ราคา",nav_about:"เกี่ยวกับ",nav_contact:"ติดต่อ",f_all:"ทั้งหมด",f_photo:"รูปถ่าย",f_video:"วิดีโอ",f_event:"Event",count_label:"ผลงาน",about_heading:"เกี่ยวกับ",contact_heading:"มีงานอยากถ่าย?\nคุยกันได้เลย",contact_button:"ทักผ่าน Instagram",pricing_cta:"สอบถามคิวและรายละเอียด",pr_heading:"เรทราคา",empty:"ยังไม่มีผลงานในหมวดนี้",fail:"โหลดผลงานไม่สำเร็จ",novid:"ยังไม่ได้ใส่ลิงก์วิดีโอ",prev:"ก่อนหน้า",next:"ถัดไป",close:"ปิด",more:"กดเพื่อดูรูปเพิ่มเติม"},
+ en:{brand:"UNDERNEATH.MEDIA",hero_title:"Cars, caught in motion",hero_subtitle:"Car photo & video · Track · Street · Event",nav_work:"Work",nav_pricing:"Pricing",nav_about:"About",nav_contact:"Contact",f_all:"All",f_photo:"Photos",f_video:"Videos",f_event:"Events",count_label:"works",about_heading:"About",contact_heading:"Got a shoot in mind?\nLet's talk",contact_button:"Message on Instagram",pricing_cta:"Ask about dates & details",pr_heading:"Pricing",empty:"No works in this category yet",fail:"Couldn't load works",novid:"No video link yet",prev:"Previous",next:"Next",close:"Close",more:"Tap to see more photos"}
 };
 const T  = k => (lang==="en" ? S[k+"_en"] : S[k]) || DEF[lang][k] || "";
 const L  = (o,k) => (lang==="en" && o[k+"_en"]) || o[k] || "";
@@ -223,27 +232,44 @@ function thumb(w){
   const m=(w.video||"").match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([\w-]{11})/);
   return m?`https://img.youtube.com/vi/${m[1]}/hqdefault.jpg`:"";
 }
+let alStep=null;
+const imgsOf=w=>[w.src].concat(w.album||[]).filter((x,i,r)=>x&&r.indexOf(x)===i);
+function album(w){
+  const ims=imgsOf(w), t=L(w,"title"); let k=0;
+  $("lb").innerHTML=`<figure class="al"><img alt="${t}"><figcaption><span>${t}</span><b></b></figcaption></figure>`
+    +(ims.length>1?'<button class="nv p" aria-label="Previous">&#8249;</button><button class="nv n" aria-label="Next">&#8250;</button>':"");
+  const im=$("lb").querySelector("img"), c=$("lb").querySelector("b");
+  const go=n=>{ k=(n+ims.length)%ims.length; im.src=ims[k]; c.textContent=ims.length>1?(k+1)+" / "+ims.length:"";
+    if(ims.length>1) new Image().src=ims[(k+1)%ims.length]; };
+  go(0);
+  if(ims.length>1){ alStep=d=>go(k+d);
+    $("lb").querySelector(".p").onclick=()=>alStep(-1); $("lb").querySelector(".n").onclick=()=>alStep(1); }
+}
 function open(w){
-  const t=L(w,"title");
-  $("lb").innerHTML = w.video ? embed(w.video)
-    : w.src ? `<img src="${w.src}" alt="${t}">` : `<p style="color:#fff">${t}</p>`;
+  alStep=null;
+  if(w.video) $("lb").innerHTML=embed(w.video);
+  else if(imgsOf(w).length) album(w);
+  else $("lb").innerHTML=`<p style="color:#fff">${L(w,"title")}</p>`;
   $("dlg").showModal();
 }
 function render(){
-  const list = WORKS.filter(w => filter==="all" || w.type===filter), g=$("grid");
-  $("count").textContent = list.length + " " + T("count_label");
-  g.innerHTML = "";
-  if(!list.length){ g.innerHTML = `<p class="empty">${T("empty")}</p>`; slide("grid"); return; }
+  const list=WORKS.filter(w=>filter==="all"||w.type===filter), g=$("grid"), slider=filter==="all";
+  g.classList.toggle("slider",slider); $("gridArrows").hidden=!slider;
+  $("count").textContent=list.length+" "+T("count_label");
+  g.innerHTML="";
+  if(!list.length){ g.innerHTML=`<p class="empty">${T("empty")}</p>`; return; }
   list.forEach(w=>{
-    const b=document.createElement("button"), t=thumb(w), ti=L(w,"title");
+    const b=document.createElement("button"), t=thumb(w), ti=L(w,"title"), n=imgsOf(w).length;
     b.className="item rv"; b.style.setProperty("--r", w.video?(w.src?"auto":"16/9"):(t?"auto":"3/2"));
     b.setAttribute("aria-label", ti);
     b.innerHTML=(t?`<img loading="lazy" src="${t}" alt="${ti}">`:`<div class="ph"></div>`)
+      +(!w.video&&n>1?`<span class="more">${T("more")} · ${n}</span>`:"")
       +(w.video?'<span class="play"></span>':"")+`<span class="cap">${ti}<small>${L(w,"sub")}</small></span>`;
-    const im=b.querySelector("img"); if(im) im.addEventListener("load",()=>slide("grid"));
+    const im=b.querySelector("img"); if(im&&slider) im.addEventListener("load",()=>slide("grid"));
     b.onclick=()=>open(w); g.appendChild(b);
   });
-  g.scrollLeft=0; observe(); slide("grid");
+  observe();
+  if(slider){ g.scrollLeft=0; slide("grid"); }
 }
 function buildPricing(){
   const p=PR.packages||[]; $("pricing").hidden=!p.length; if(!p.length) return;
@@ -255,11 +281,9 @@ function buildPricing(){
 function applyText(){
   document.documentElement.lang=lang;
   document.querySelectorAll("[data-t]").forEach(el=>{ el.textContent=T(el.dataset.t); });
-  const lg=$("logo"); lg.textContent="";
-  T("brand").split(".").forEach((p,i)=>{ if(i){ const b=document.createElement("b"); b.textContent="."; lg.append(b); } lg.append(p); });
+  $("logo").textContent=T("brand");
   $("igBtn").href=IG();
-  $("lang").textContent = lang==="en" ? "TH" : "EN";
-  $("lang").setAttribute("aria-label", lang==="en" ? "ภาษาไทย" : "English");
+  $("lang").setAttribute("aria-checked", lang==="en");
   $("close").setAttribute("aria-label", T("close"));
   document.querySelectorAll("[data-sl]").forEach(b=>b.setAttribute("aria-label", T(b.dataset.sl==="n"?"next":"prev")));
   const at=L(S,"about_text");
@@ -292,7 +316,11 @@ function init(){
   render();
 }
 $("close").onclick = () => $("dlg").close();
-$("dlg").addEventListener("close", () => $("lb").innerHTML = "");
+$("dlg").addEventListener("close", () => { $("lb").innerHTML = ""; alStep=null; });
+$("dlg").addEventListener("keydown", e => { if(!alStep) return; if(e.key==="ArrowRight") alStep(1); if(e.key==="ArrowLeft") alStep(-1); });
+let tx0=0;
+$("lb").addEventListener("touchstart", e => { tx0=e.changedTouches[0].clientX; }, {passive:true});
+$("lb").addEventListener("touchend", e => { if(!alStep) return; const d=e.changedTouches[0].clientX-tx0; if(Math.abs(d)>50) alStep(d<0?1:-1); });
 $("dlg").addEventListener("click", e => { if(e.target.id==="dlg"||e.target.id==="lb") $("dlg").close(); });
 applyText();
 const siteP = fetch("data/site.json").then(r=>r.json()).then(d=>Object.assign(S,d)).catch(()=>{});
