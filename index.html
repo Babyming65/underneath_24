@@ -7,9 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#e9ebee;--ink:#15171b;--mute:#5d636c;--card:#dfe2e6;--red:#d3202b;--line:#c5c9cf;
+:root{--bg:#fff;--ink:#111;--mute:#6b6f76;--card:#eceef0;--red:#d3202b;--line:#e3e5e8;
 --font-d:"Barlow Condensed","Arial Narrow",sans-serif;--font-b:"DM Sans",system-ui,sans-serif}
-@media (prefers-color-scheme:dark){:root{--bg:#1c1e22;--ink:#eceef1;--mute:#9aa0a9;--card:#292c31;--line:#3a3e45}}
 *{box-sizing:border-box;margin:0}
 body{background:var(--bg);color:var(--ink);font-family:var(--font-b);line-height:1.5}
 a{color:inherit}
@@ -67,28 +66,62 @@ dialog::backdrop{background:rgba(8,9,11,.92)}
 .x{position:fixed;top:14px;right:18px;z-index:2;background:#fff;border:0;border-radius:50%;width:42px;height:42px;font-size:1.3rem;cursor:pointer}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 @media (max-width:600px){.hero{aspect-ratio:4/5}nav a:not(:last-child){display:none}}
+
+/* ---- clean look + scroll motion ---- */
+.hero{margin:0;border-radius:0;aspect-ratio:auto;height:clamp(420px,78vh,760px)}
+.hero img{transform:scale(1.1);will-change:transform}
+.hero h1{animation:rise 1.1s .15s cubic-bezier(.2,.7,.2,1) both}
+.hero p{animation:rise 1.1s .35s cubic-bezier(.2,.7,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
+.chip{border:0;border-bottom:2px solid transparent;border-radius:0;padding:6px 2px;margin-right:20px;color:var(--mute)}
+.chip[aria-pressed=true]{background:none;color:var(--ink);border-color:var(--ink)}
+.grid{column-gap:8px}
+.item{margin-bottom:8px;border-radius:0}
+.tag{display:none}
+.rv{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+.item img,.item .ph{transform:scale(1.12);transition:transform 1.5s cubic-bezier(.2,.7,.2,1)}
+.item.in img,.item.in .ph{transform:scale(1)}
+.item.in:hover img,.item.in:hover .ph{transform:scale(1.03);transition-duration:.6s}
+@media (max-width:600px){.hero{aspect-ratio:auto;height:72vh}}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}.item img,.item .ph{transform:none}.hero img{transform:none}.hero h1,.hero p{animation:none}}
+
+html{scroll-behavior:smooth}
+section,footer{scroll-margin-top:64px}
+footer h2{white-space:pre-line}
+#about{padding:64px clamp(16px,4vw,48px);border-top:1px solid var(--line)}
+.ab{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(24px,5vw,72px);align-items:center}
+.ab.noimg{grid-template-columns:minmax(0,1fr)}
+.ab img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+.ab h2{font:800 clamp(2rem,5vw,3.4rem)/1 var(--font-d);text-transform:uppercase}
+.ab .tx{margin-top:18px;white-space:pre-line;max-width:56ch}
+.ab ul{list-style:none;padding:0;margin-top:22px;display:grid;gap:8px}
+.ab li{padding-left:18px;position:relative}
+.ab li::before{content:"";position:absolute;left:0;top:.6em;width:8px;height:2px;background:var(--red)}
+@media (max-width:700px){.ab{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 <header>
-  <a class="logo" href="#top">UNDERNEATH<b>.</b>MEDIA</a>
-  <nav><a href="#work">ผลงาน</a><a href="#pricing">ราคา</a><a href="#contact">ติดต่อ</a></nav>
+  <a class="logo" id="logo" href="#top">UNDERNEATH<b>.</b>MEDIA</a>
+  <nav><a href="#work" data-t="nav_work">ผลงาน</a><a href="#pricing" data-t="nav_pricing">ราคา</a><a href="#about" id="navAbout" data-t="nav_about" hidden>เกี่ยวกับ</a><a href="#contact" data-t="nav_contact">ติดต่อ</a></nav>
 </header>
 
 <main id="top">
   <section class="hero" id="hero" tabindex="0" aria-label="ผลงานเด่น">
     <div class="hero-text">
-      <h1 id="heroTitle">Cars, caught in motion</h1>
-      <p>ถ่ายรูปและวิดีโอรถ · Track · Street · Event</p>
+      <h1 id="heroTitle" data-t="hero_title">Cars, caught in motion</h1>
+      <p data-t="hero_subtitle">ถ่ายรูปและวิดีโอรถ · Track · Street · Event</p>
     </div>
   </section>
 
   <section id="work">
     <div class="bar" role="group" aria-label="กรองผลงาน">
-      <button class="chip" data-f="all" aria-pressed="true">ทั้งหมด</button>
-      <button class="chip" data-f="photo" aria-pressed="false">รูปถ่าย</button>
-      <button class="chip" data-f="video" aria-pressed="false">วิดีโอ</button>
-      <button class="chip" data-f="event" aria-pressed="false">Event</button>
+      <button class="chip" data-f="all" data-t="f_all" aria-pressed="true">ทั้งหมด</button>
+      <button class="chip" data-f="photo" data-t="f_photo" aria-pressed="false">รูปถ่าย</button>
+      <button class="chip" data-f="video" data-t="f_video" aria-pressed="false">วิดีโอ</button>
+      <button class="chip" data-f="event" data-t="f_event" aria-pressed="false">Event</button>
       <span class="count" id="count"></span>
     </div>
     <div class="grid" id="grid"></div>
@@ -101,10 +134,17 @@ dialog::backdrop{background:rgba(8,9,11,.92)}
   <p class="pr-note" id="prN"></p>
 </section>
 
+<section id="about" hidden>
+  <div class="ab" id="abBox">
+    <div class="rv"><img id="abImg" alt="" hidden></div>
+    <div class="rv"><h2 id="abH"></h2><p class="tx" id="abT"></p><ul id="abL"></ul></div>
+  </div>
+</section>
+
 <footer id="contact">
   <div>
-    <h2>มีงานอยากถ่าย?<br>คุยกันได้เลย</h2>
-    <a class="btn" href="https://instagram.com/underneath_media" target="_blank" rel="noopener">ทักผ่าน Instagram</a>
+    <h2 data-t="contact_heading">มีงานอยากถ่าย?<br>คุยกันได้เลย</h2>
+    <a class="btn" id="igBtn" data-t="contact_button" href="https://instagram.com/underneath_media" target="_blank" rel="noopener">ทักผ่าน Instagram</a>
   </div>
 </footer>
 
@@ -116,6 +156,22 @@ let WORKS = [];
 const LABEL = { photo:"รูป", video:"วิดีโอ", event:"Event" };
 const $ = id => document.getElementById(id);
 let filter = "all";
+
+const io = "IntersectionObserver" in window ? new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
+}),{threshold:.12,rootMargin:"0px 0px -6% 0px"}) : null;
+function observe(){
+  document.querySelectorAll(".rv:not(.in)").forEach((el,i)=>{
+    if(!io){ el.classList.add("in"); return; }
+    el.style.transitionDelay = (i%3)*90+"ms"; io.observe(el);
+  });
+}
+const calm = matchMedia("(prefers-reduced-motion:reduce)").matches;
+addEventListener("scroll",()=>{
+  if(calm||scrollY>innerHeight) return;
+  const im=$("hero").querySelector("img");
+  if(im) im.style.transform=`translate3d(0,${scrollY*.16}px,0) scale(1.1)`;
+},{passive:true});
 
 function embed(url){
   const yt = url.match(/(?:youtu\.be\/|v=)([\w-]{11})/);
@@ -139,12 +195,12 @@ function open(w){
 }
 function render(){
   const list = WORKS.filter(w => filter==="all" || w.type===filter);
-  $("count").textContent = list.length + " ผลงาน";
+  $("count").textContent = list.length + " " + (S.count_label || "ผลงาน");
   $("grid").innerHTML = "";
   if(!list.length){ $("grid").innerHTML = '<p class="empty">ยังไม่มีผลงานในหมวดนี้</p>'; return; }
   list.forEach(w=>{
     const b = document.createElement("button");
-    b.className = "item"; const t=thumb(w); b.style.setProperty("--r", w.video?(w.src?"auto":"16/9"):(t?"auto":"3/2"));
+    b.className = "item rv"; const t=thumb(w); b.style.setProperty("--r", w.video?(w.src?"auto":"16/9"):(t?"auto":"3/2"));
     b.setAttribute("aria-label", w.title);
     b.innerHTML = (t ? `<img loading="lazy" src="${t}" alt="${w.title}">` : `<div class="ph"></div>`)
       + `<span class="tag">${LABEL[w.type]}</span>` + (w.video ? '<span class="play"></span>' : "")
@@ -152,6 +208,7 @@ function render(){
     b.onclick = () => open(w);
     $("grid").appendChild(b);
   });
+  observe();
 }
 document.querySelectorAll(".chip").forEach(c => c.onclick = () => {
   filter = c.dataset.f;
@@ -170,14 +227,31 @@ render();
 $("close").onclick = () => $("dlg").close();
 $("dlg").addEventListener("close", () => $("lb").innerHTML = "");
 $("dlg").addEventListener("click", e => { if(e.target.id==="dlg"||e.target.id==="lb") $("dlg").close(); });
-fetch("data/works.json").then(r=>r.json()).then(d=>{WORKS=d.works||[];init();})
+const S = {};
+function applyText(){
+  document.querySelectorAll("[data-t]").forEach(el=>{ const v=S[el.dataset.t]; if(v) el.textContent=v; });
+  if(S.brand){ const lg=$("logo"); lg.textContent="";
+    S.brand.split(".").forEach((p,i)=>{ if(i){ const b=document.createElement("b"); b.textContent="."; lg.append(b); } lg.append(p); }); }
+  if(S.instagram_url) $("igBtn").href=S.instagram_url;
+  if(S.about_text){
+    $("abH").textContent=S.about_heading||"เกี่ยวกับ"; $("abT").textContent=S.about_text;
+    $("abL").innerHTML=(S.about_points||[]).map(p=>`<li>${p}</li>`).join("");
+    if(S.about_image){ $("abImg").src=S.about_image; $("abImg").alt=S.about_heading||""; $("abImg").hidden=false; }
+    else { $("abImg").parentElement.hidden=true; $("abBox").classList.add("noimg"); }
+    $("about").hidden=false; $("navAbout").hidden=false; observe();
+  }
+}
+const siteP = fetch("data/site.json").then(r=>r.json()).then(d=>{ Object.assign(S,d); applyText(); }).catch(()=>{});
+siteP.then(()=>fetch("data/works.json")).then(r=>r.json()).then(d=>{WORKS=d.works||[];init();})
   .catch(()=>{$("grid").innerHTML='<p class="empty">โหลดผลงานไม่สำเร็จ</p>';});
 
-fetch("data/pricing.json").then(r=>r.json()).then(d=>{
+siteP.then(()=>fetch("data/pricing.json")).then(r=>r.json()).then(d=>{
   const p=d.packages||[]; if(!p.length) return;
   $("prH").textContent=d.heading||"เรทราคา"; $("prI").textContent=d.intro||""; $("prN").textContent=d.note||"";
-  $("prG").innerHTML=p.map(k=>`<div class="pk${k.highlight?" hl":""}"><h3>${k.name||""}</h3><div class="pc">${k.price||""}</div><div class="un">${k.unit||""}</div><ul>${(k.features||[]).map(f=>`<li>${f}</li>`).join("")}</ul><a class="btn" href="https://instagram.com/underneath_media" target="_blank" rel="noopener">สอบถามคิวและรายละเอียด</a></div>`).join("");
+  $("prG").innerHTML=p.map(k=>`<div class="pk${k.highlight?" hl":""}"><h3>${k.name||""}</h3><div class="pc">${k.price||""}</div><div class="un">${k.unit||""}</div><ul>${(k.features||[]).map(f=>`<li>${f}</li>`).join("")}</ul><a class="btn" href="${S.instagram_url||"https://instagram.com/underneath_media"}" target="_blank" rel="noopener">${S.pricing_cta||"สอบถามคิวและรายละเอียด"}</a></div>`).join("");
   $("pricing").hidden=false;
+  document.querySelectorAll(".pk,.pr-head").forEach(e=>e.classList.add("rv"));
+  observe();
 }).catch(()=>{});
 </script>
 </body>
