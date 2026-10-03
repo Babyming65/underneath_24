@@ -7,6 +7,7 @@
       "sub": "R33_THEPIG",
       "sub_en": "",
       "src": "/images/4.webp",
+      "album": [],
       "video": "https://www.instagram.com/reel/DcIjBe7soyi/?stkn=enV3YXQzMzE5cWV6",
       "featured": true
     },
@@ -17,6 +18,14 @@
       "sub": "",
       "sub_en": "",
       "src": "/images/639489074_17938084575154978_8474629177104141483_n.webp",
+      "album": [
+        "/images/640383376_17938084587154978_1771003513834149761_n.webp",
+        "/images/639917698_17938084608154978_2600017662341750767_n.webp",
+        "/images/636738788_17938084749154978_5692955811841127652_n.webp",
+        "/images/639476197_17938084716154978_5203027713378990441_n.webp",
+        "/images/637859982_17938084725154978_1531341385501955041_n.webp",
+        "/images/639725840_17938084686154978_3950463607237403214_n.webp"
+      ],
       "video": "",
       "featured": false
     },
@@ -27,6 +36,7 @@
       "sub": "LOOPR",
       "sub_en": "",
       "src": "/images/Screenshot 2569-10-03 at 13.18.31.webp",
+      "album": [],
       "video": "https://www.instagram.com/reel/DTNPywTE1Zt/?stkn=MWI1NHoyODB3ZXZjZA==",
       "featured": false
     }
