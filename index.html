@@ -100,12 +100,29 @@ footer h2{white-space:pre-line}
 .ab li::before{content:"";position:absolute;left:0;top:.6em;width:8px;height:2px;background:var(--red)}
 @media (max-width:700px){.ab{grid-template-columns:minmax(0,1fr)}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* ---- sliders + language ---- */
+nav{display:flex;align-items:center}
+.lang{order:2;margin-left:20px;border:1.5px solid var(--line);background:none;border-radius:99px;padding:5px 12px;font:600 .85rem var(--font-b);cursor:pointer;color:var(--ink)}
+.lang:hover{border-color:var(--ink)}
+.arrows{display:flex;gap:8px;margin-left:14px}
+.arrows button{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--line);background:none;color:var(--ink);cursor:pointer;font-size:1.3rem;line-height:1}
+.arrows button:not(:disabled):hover{border-color:var(--ink)}
+.arrows button:disabled{opacity:.3;cursor:default}
+.grid{columns:auto;display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:clamp(16px,4vw,48px);scrollbar-width:none;overscroll-behavior-x:contain}
+.grid::-webkit-scrollbar,.pr-grid::-webkit-scrollbar{display:none}
+.item{flex:0 0 auto;width:auto;height:clamp(240px,58vh,520px);margin:0;scroll-snap-align:start}
+.item img,.item .ph{height:100%;width:auto;aspect-ratio:var(--r,3/2);object-fit:cover}
+.empty{padding:20px 0}
+.pr-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
+.pr-grid{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;margin:28px calc(-1*clamp(16px,4vw,48px)) 0;padding:0 clamp(16px,4vw,48px) 8px;scroll-padding-left:clamp(16px,4vw,48px);scrollbar-width:none;overscroll-behavior-x:contain}
+.pk{flex:0 0 min(320px,84%);scroll-snap-align:start}
 </style>
 </head>
 <body>
 <header>
   <a class="logo" id="logo" href="#top">UNDERNEATH<b>.</b>MEDIA</a>
-  <nav><a href="#work" data-t="nav_work">ผลงาน</a><a href="#pricing" data-t="nav_pricing">ราคา</a><a href="#about" id="navAbout" data-t="nav_about" hidden>เกี่ยวกับ</a><a href="#contact" data-t="nav_contact">ติดต่อ</a></nav>
+  <nav><button class="lang" id="lang" type="button">EN</button><a href="#work" data-t="nav_work">ผลงาน</a><a href="#pricing" data-t="nav_pricing">ราคา</a><a href="#about" id="navAbout" data-t="nav_about" hidden>เกี่ยวกับ</a><a href="#contact" data-t="nav_contact">ติดต่อ</a></nav>
 </header>
 
 <main id="top">
@@ -123,13 +140,15 @@ footer h2{white-space:pre-line}
       <button class="chip" data-f="video" data-t="f_video" aria-pressed="false">วิดีโอ</button>
       <button class="chip" data-f="event" data-t="f_event" aria-pressed="false">Event</button>
       <span class="count" id="count"></span>
+      <span class="arrows"><button type="button" data-sl="p" data-for="grid">&#8249;</button><button type="button" data-sl="n" data-for="grid">&#8250;</button></span>
     </div>
     <div class="grid" id="grid"></div>
   </section>
 </main>
 
 <section id="pricing" hidden>
-  <div class="pr-head"><h2 id="prH"></h2><p id="prI"></p></div>
+  <div class="pr-head rv"><div><h2 id="prH"></h2><p id="prI"></p></div>
+    <span class="arrows"><button type="button" data-sl="p" data-for="prG">&#8249;</button><button type="button" data-sl="n" data-for="prG">&#8250;</button></span></div>
   <div class="pr-grid" id="prG"></div>
   <p class="pr-note" id="prN"></p>
 </section>
@@ -151,12 +170,18 @@ footer h2{white-space:pre-line}
 <dialog id="dlg"><button class="x" id="close" aria-label="ปิด">×</button><div class="lb" id="lb"></div></dialog>
 
 <script>
-let WORKS = [];
-
-const LABEL = { photo:"รูป", video:"วิดีโอ", event:"Event" };
+let WORKS=[], PR={}, filter="all", lang="th";
+try{ lang=localStorage.getItem("lang")==="en"?"en":"th"; }catch(e){}
 const $ = id => document.getElementById(id);
-let filter = "all";
-
+const S = {};
+const DEF = {
+ th:{brand:"UNDERNEATH.MEDIA",hero_title:"Cars, caught in motion",hero_subtitle:"ถ่ายรูปและวิดีโอรถ · Track · Street · Event",nav_work:"ผลงาน",nav_pricing:"ราคา",nav_about:"เกี่ยวกับ",nav_contact:"ติดต่อ",f_all:"ทั้งหมด",f_photo:"รูปถ่าย",f_video:"วิดีโอ",f_event:"Event",count_label:"ผลงาน",about_heading:"เกี่ยวกับ",contact_heading:"มีงานอยากถ่าย?\nคุยกันได้เลย",contact_button:"ทักผ่าน Instagram",pricing_cta:"สอบถามคิวและรายละเอียด",pr_heading:"เรทราคา",empty:"ยังไม่มีผลงานในหมวดนี้",fail:"โหลดผลงานไม่สำเร็จ",novid:"ยังไม่ได้ใส่ลิงก์วิดีโอ",prev:"ก่อนหน้า",next:"ถัดไป",close:"ปิด"},
+ en:{brand:"UNDERNEATH.MEDIA",hero_title:"Cars, caught in motion",hero_subtitle:"Car photo & video · Track · Street · Event",nav_work:"Work",nav_pricing:"Pricing",nav_about:"About",nav_contact:"Contact",f_all:"All",f_photo:"Photos",f_video:"Videos",f_event:"Events",count_label:"works",about_heading:"About",contact_heading:"Got a shoot in mind?\nLet's talk",contact_button:"Message on Instagram",pricing_cta:"Ask about dates & details",pr_heading:"Pricing",empty:"No works in this category yet",fail:"Couldn't load works",novid:"No video link yet",prev:"Previous",next:"Next",close:"Close"}
+};
+const T  = k => (lang==="en" ? S[k+"_en"] : S[k]) || DEF[lang][k] || "";
+const L  = (o,k) => (lang==="en" && o[k+"_en"]) || o[k] || "";
+const LL = (o,k) => (lang==="en" && (o[k+"_en"]||[]).length) ? o[k+"_en"] : (o[k]||[]);
+const IG = () => S.instagram_url || "https://instagram.com/underneath_media";
 const io = "IntersectionObserver" in window ? new IntersectionObserver(es=>es.forEach(e=>{
   if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
 }),{threshold:.12,rootMargin:"0px 0px -6% 0px"}) : null;
@@ -173,86 +198,107 @@ addEventListener("scroll",()=>{
   if(im) im.style.transform=`translate3d(0,${scrollY*.16}px,0) scale(1.1)`;
 },{passive:true});
 
+function slide(id){
+  const el=$(id), bs=document.querySelectorAll(`[data-for="${id}"]`);
+  const upd=()=>{ const max=el.scrollWidth-el.clientWidth-2;
+    bs.forEach(b=>{ b.disabled = b.dataset.sl==="p" ? el.scrollLeft<=2 : el.scrollLeft>=max; }); };
+  if(!el._s){ el._s=1; el.addEventListener("scroll",upd,{passive:true}); addEventListener("resize",upd); }
+  requestAnimationFrame(upd); setTimeout(upd,500);
+}
+document.querySelectorAll("[data-sl]").forEach(b=>b.onclick=()=>{
+  const el=$(b.dataset.for); el.scrollBy({left:(b.dataset.sl==="n"?1:-1)*el.clientWidth*.8,behavior:"smooth"});
+});
 function embed(url){
-  const yt = url.match(/(?:youtu\.be\/|v=)([\w-]{11})/);
-  if (yt) return `<iframe src="https://www.youtube.com/embed/${yt[1]}?autoplay=1" allow="autoplay;fullscreen" allowfullscreen></iframe>`;
+  const yt = url.match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([\w-]{11})/);
+  if (yt) return `<iframe${/shorts\//.test(url)?' class="ig"':''} src="https://www.youtube.com/embed/${yt[1]}?autoplay=1&rel=0&modestbranding=1&playsinline=1" allow="autoplay;fullscreen" allowfullscreen></iframe>`;
   const ig = url.match(/instagram\.com\/(?:[\w.]+\/)?(reels?|p|tv)\/([\w-]+)/);
   if (ig) return `<iframe class="ig" src="https://www.instagram.com/${ig[1]==="reels"?"reel":ig[1]}/${ig[2]}/embed" allowfullscreen scrolling="no"></iframe>`;
   const vm = url.match(/vimeo\.com\/(\d+)/);
-  if (vm) return `<iframe src="https://player.vimeo.com/video/${vm[1]}?autoplay=1" allow="autoplay;fullscreen" allowfullscreen></iframe>`;
+  if (vm) return `<iframe src="https://player.vimeo.com/video/${vm[1]}?autoplay=1&title=0&byline=0&portrait=0" allow="autoplay;fullscreen" allowfullscreen></iframe>`;
   if (/\.(mp4|webm|mov)$/i.test(url)) return `<video src="${url}" controls autoplay></video>`;
-  return `<p style="color:#fff">ยังไม่ได้ใส่ลิงก์วิดีโอ</p>`;
+  return `<p style="color:#fff">${T("novid")}</p>`;
 }
 function thumb(w){
   if(w.src) return w.src;
-  const m=(w.video||"").match(/(?:youtu\.be\/|v=)([\w-]{11})/);
+  const m=(w.video||"").match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([\w-]{11})/);
   return m?`https://img.youtube.com/vi/${m[1]}/hqdefault.jpg`:"";
 }
 function open(w){
+  const t=L(w,"title");
   $("lb").innerHTML = w.video ? embed(w.video)
-    : w.src ? `<img src="${w.src}" alt="${w.title}">` : `<p style="color:#fff">${w.title}</p>`;
+    : w.src ? `<img src="${w.src}" alt="${t}">` : `<p style="color:#fff">${t}</p>`;
   $("dlg").showModal();
 }
 function render(){
-  const list = WORKS.filter(w => filter==="all" || w.type===filter);
-  $("count").textContent = list.length + " " + (S.count_label || "ผลงาน");
-  $("grid").innerHTML = "";
-  if(!list.length){ $("grid").innerHTML = '<p class="empty">ยังไม่มีผลงานในหมวดนี้</p>'; return; }
+  const list = WORKS.filter(w => filter==="all" || w.type===filter), g=$("grid");
+  $("count").textContent = list.length + " " + T("count_label");
+  g.innerHTML = "";
+  if(!list.length){ g.innerHTML = `<p class="empty">${T("empty")}</p>`; slide("grid"); return; }
   list.forEach(w=>{
-    const b = document.createElement("button");
-    b.className = "item rv"; const t=thumb(w); b.style.setProperty("--r", w.video?(w.src?"auto":"16/9"):(t?"auto":"3/2"));
-    b.setAttribute("aria-label", w.title);
-    b.innerHTML = (t ? `<img loading="lazy" src="${t}" alt="${w.title}">` : `<div class="ph"></div>`)
-      + `<span class="tag">${LABEL[w.type]}</span>` + (w.video ? '<span class="play"></span>' : "")
-      + `<span class="cap">${w.title}<small>${w.sub||""}</small></span>`;
-    b.onclick = () => open(w);
-    $("grid").appendChild(b);
+    const b=document.createElement("button"), t=thumb(w), ti=L(w,"title");
+    b.className="item rv"; b.style.setProperty("--r", w.video?(w.src?"auto":"16/9"):(t?"auto":"3/2"));
+    b.setAttribute("aria-label", ti);
+    b.innerHTML=(t?`<img loading="lazy" src="${t}" alt="${ti}">`:`<div class="ph"></div>`)
+      +(w.video?'<span class="play"></span>':"")+`<span class="cap">${ti}<small>${L(w,"sub")}</small></span>`;
+    const im=b.querySelector("img"); if(im) im.addEventListener("load",()=>slide("grid"));
+    b.onclick=()=>open(w); g.appendChild(b);
   });
-  observe();
+  g.scrollLeft=0; observe(); slide("grid");
+}
+function buildPricing(){
+  const p=PR.packages||[]; $("pricing").hidden=!p.length; if(!p.length) return;
+  $("prH").textContent=(lang==="en"?PR.heading_en:PR.heading)||T("pr_heading");
+  $("prI").textContent=L(PR,"intro"); $("prN").textContent=L(PR,"note");
+  $("prG").innerHTML=p.map(k=>`<div class="pk rv${k.highlight?" hl":""}"><h3>${L(k,"name")}</h3><div class="pc">${k.price||""}</div><div class="un">${L(k,"unit")}</div><ul>${LL(k,"features").map(f=>`<li>${f}</li>`).join("")}</ul><a class="btn" href="${IG()}" target="_blank" rel="noopener">${T("pricing_cta")}</a></div>`).join("");
+  $("prG").scrollLeft=0; observe(); slide("prG");
+}
+function applyText(){
+  document.documentElement.lang=lang;
+  document.querySelectorAll("[data-t]").forEach(el=>{ el.textContent=T(el.dataset.t); });
+  const lg=$("logo"); lg.textContent="";
+  T("brand").split(".").forEach((p,i)=>{ if(i){ const b=document.createElement("b"); b.textContent="."; lg.append(b); } lg.append(p); });
+  $("igBtn").href=IG();
+  $("lang").textContent = lang==="en" ? "TH" : "EN";
+  $("lang").setAttribute("aria-label", lang==="en" ? "ภาษาไทย" : "English");
+  $("close").setAttribute("aria-label", T("close"));
+  document.querySelectorAll("[data-sl]").forEach(b=>b.setAttribute("aria-label", T(b.dataset.sl==="n"?"next":"prev")));
+  const at=L(S,"about_text");
+  $("about").hidden=!at; $("navAbout").hidden=!at;
+  if(at){
+    $("abH").textContent=T("about_heading"); $("abT").textContent=at;
+    $("abL").innerHTML=LL(S,"about_points").map(p=>`<li>${p}</li>`).join("");
+    const has=!!S.about_image; $("abImg").parentElement.hidden=!has; $("abBox").classList.toggle("noimg",!has);
+    if(has){ $("abImg").src=S.about_image; $("abImg").alt=T("about_heading"); $("abImg").hidden=false; }
+    observe();
+  }
 }
 document.querySelectorAll(".chip").forEach(c => c.onclick = () => {
   filter = c.dataset.f;
   document.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", x===c));
   render();
 });
+$("lang").onclick = () => {
+  lang = lang==="en" ? "th" : "en";
+  try{ localStorage.setItem("lang",lang); }catch(e){}
+  applyText(); render(); buildPricing();
+};
 function init(){
-const feat = WORKS.find(w=>w.featured) || WORKS[0];
-if (feat){
-  if (thumb(feat)) $("hero").insertAdjacentHTML("afterbegin", `<img src="${thumb(feat)}" alt="${feat.title}">`);
-  $("hero").onclick = () => open(feat);
-  $("hero").onkeydown = e => { if(e.key==="Enter") open(feat); };
-}
-render();
+  const feat = WORKS.find(w=>w.featured) || WORKS[0];
+  if (feat){
+    if (thumb(feat)) $("hero").insertAdjacentHTML("afterbegin", `<img src="${thumb(feat)}" alt="">`);
+    $("hero").onclick = () => open(feat);
+    $("hero").onkeydown = e => { if(e.key==="Enter") open(feat); };
+  }
+  render();
 }
 $("close").onclick = () => $("dlg").close();
 $("dlg").addEventListener("close", () => $("lb").innerHTML = "");
 $("dlg").addEventListener("click", e => { if(e.target.id==="dlg"||e.target.id==="lb") $("dlg").close(); });
-const S = {};
-function applyText(){
-  document.querySelectorAll("[data-t]").forEach(el=>{ const v=S[el.dataset.t]; if(v) el.textContent=v; });
-  if(S.brand){ const lg=$("logo"); lg.textContent="";
-    S.brand.split(".").forEach((p,i)=>{ if(i){ const b=document.createElement("b"); b.textContent="."; lg.append(b); } lg.append(p); }); }
-  if(S.instagram_url) $("igBtn").href=S.instagram_url;
-  if(S.about_text){
-    $("abH").textContent=S.about_heading||"เกี่ยวกับ"; $("abT").textContent=S.about_text;
-    $("abL").innerHTML=(S.about_points||[]).map(p=>`<li>${p}</li>`).join("");
-    if(S.about_image){ $("abImg").src=S.about_image; $("abImg").alt=S.about_heading||""; $("abImg").hidden=false; }
-    else { $("abImg").parentElement.hidden=true; $("abBox").classList.add("noimg"); }
-    $("about").hidden=false; $("navAbout").hidden=false; observe();
-  }
-}
-const siteP = fetch("data/site.json").then(r=>r.json()).then(d=>{ Object.assign(S,d); applyText(); }).catch(()=>{});
-siteP.then(()=>fetch("data/works.json")).then(r=>r.json()).then(d=>{WORKS=d.works||[];init();})
-  .catch(()=>{$("grid").innerHTML='<p class="empty">โหลดผลงานไม่สำเร็จ</p>';});
-
-siteP.then(()=>fetch("data/pricing.json")).then(r=>r.json()).then(d=>{
-  const p=d.packages||[]; if(!p.length) return;
-  $("prH").textContent=d.heading||"เรทราคา"; $("prI").textContent=d.intro||""; $("prN").textContent=d.note||"";
-  $("prG").innerHTML=p.map(k=>`<div class="pk${k.highlight?" hl":""}"><h3>${k.name||""}</h3><div class="pc">${k.price||""}</div><div class="un">${k.unit||""}</div><ul>${(k.features||[]).map(f=>`<li>${f}</li>`).join("")}</ul><a class="btn" href="${S.instagram_url||"https://instagram.com/underneath_media"}" target="_blank" rel="noopener">${S.pricing_cta||"สอบถามคิวและรายละเอียด"}</a></div>`).join("");
-  $("pricing").hidden=false;
-  document.querySelectorAll(".pk,.pr-head").forEach(e=>e.classList.add("rv"));
-  observe();
-}).catch(()=>{});
+applyText();
+const siteP = fetch("data/site.json").then(r=>r.json()).then(d=>Object.assign(S,d)).catch(()=>{});
+siteP.then(()=>{ applyText(); return fetch("data/works.json"); }).then(r=>r.json()).then(d=>{ WORKS=d.works||[]; init(); })
+  .catch(()=>{ $("grid").innerHTML=`<p class="empty">${T("fail")}</p>`; });
+siteP.then(()=>fetch("data/pricing.json")).then(r=>r.json()).then(d=>{ PR=d; buildPricing(); }).catch(()=>{});
 </script>
 </body>
 </html>
