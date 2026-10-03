@@ -9,18 +9,18 @@
       "featured": true
     },
     {
-      "title": "ตัวอย่าง: Rolling shot",
-      "type": "video",
-      "sub": "LOOPR",
-      "src": "/images/Screenshot 2569-10-03 at 13.18.31.webp",
-      "video": "",
-      "featured": false
-    },
-    {
       "title": "ตัวอย่าง: Car meet",
       "type": "event",
       "sub": "ลบอันนี้ได้",
       "src": "",
+      "video": "",
+      "featured": false
+    },
+    {
+      "title": "ตัวอย่าง: Rolling shot",
+      "type": "video",
+      "sub": "LOOPR",
+      "src": "/images/Screenshot 2569-10-03 at 13.18.31.webp",
       "video": "",
       "featured": false
     }
