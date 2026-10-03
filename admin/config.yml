@@ -42,7 +42,8 @@ collections:
                   - { label: Event, value: event }
               - { name: sub, label: คำอธิบายสั้นๆ (เช่น สถานที่), widget: string, required: false }
               - { name: sub_en, label: คำอธิบายสั้นๆ (อังกฤษ), widget: string, required: false }
-              - { name: src, label: รูป (ถ้าเป็นวิดีโอ YouTube ไม่ต้องใส่ก็ได้), widget: image, required: false }
+              - { name: src, label: รูปปก (ถ้าเป็นวิดีโอ YouTube ไม่ต้องใส่ก็ได้), widget: image, required: false }
+              - { name: album, label: อัลบั้มรูปของงานนี้ (เลือกได้หลายรูปพร้อมกัน กดที่งานแล้วจะเปิดดูทั้งอัลบั้ม), widget: image, multiple: true, required: false }
               - { name: video, label: ลิงก์วิดีโอ (YouTube / Vimeo), widget: string, required: false }
               - { name: featured, label: ขึ้นเป็นภาพใหญ่หน้าแรก, widget: boolean, default: false, required: false }
       - name: pricing
@@ -73,7 +74,7 @@ collections:
         label: ข้อความและตั้งค่าเว็บ
         file: data/site.json
         fields:
-          - { name: brand, label: ชื่อโลโก้ (จุด . จะเป็นสีแดง), widget: string, required: false }
+          - { name: brand, label: ชื่อโลโก้, widget: string, required: false }
           - { name: hero_title, label: หัวข้อใหญ่หน้าแรก, widget: string, required: false }
           - { name: hero_subtitle, label: ข้อความใต้หัวข้อใหญ่, widget: string, required: false }
           - { name: nav_work, label: เมนู - ผลงาน, widget: string, required: false }
