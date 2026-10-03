@@ -1,6 +1,17 @@
 {
   "works": [
     {
+      "title": "HFTH25",
+      "title_en": "HFTH25",
+      "type": "video",
+      "sub": "",
+      "sub_en": "",
+      "src": "/images/Screenshot 2569-10-03 at 23.18.42.webp",
+      "album": [],
+      "video": "https://www.instagram.com/reel/DSpPrL8E7SS/",
+      "featured": false
+    },
+    {
       "title": "ตัวอย่าง: Track day",
       "title_en": "",
       "type": "video",
