@@ -11,7 +11,7 @@
   "f_video": "วิดีโอ",
   "f_event": "Event",
   "count_label": "ผลงาน",
-  "about_heading": "เกี่ยวกับ",
+  "about_heading": "เกี่ยวกับพวกเรา",
   "about_text": "ตัวอย่าง: ผมเป็นช่างภาพและวิดีโอกราฟเฟอร์สายรถ ถ่ายทั้งงานสนามแข่ง รถสตรีท และอีเวนต์\nแก้ข้อความนี้ได้ในหน้าแอดมิน เมนู ข้อความและตั้งค่าเว็บ",
   "about_image": "/images/underneath-logo1.webp",
   "about_points": [
@@ -33,7 +33,7 @@
   "f_video_en": "",
   "f_event_en": "",
   "count_label_en": "",
-  "about_heading_en": "",
+  "about_heading_en": "ABOUT US",
   "about_text_en": "",
   "about_points_en": [],
   "pricing_cta_en": "",
