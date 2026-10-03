@@ -1,0 +1,24 @@
+{
+  "brand": "UNDERNEATH.MEDIA",
+  "hero_title": "Cars, caught in motion",
+  "hero_subtitle": "ถ่ายรูปและวิดีโอรถ · Track · Street · Event",
+  "nav_work": "ผลงาน",
+  "nav_pricing": "ราคา",
+  "nav_about": "เกี่ยวกับ",
+  "nav_contact": "ติดต่อ",
+  "f_all": "ทั้งหมด",
+  "f_photo": "รูปถ่าย",
+  "f_video": "วิดีโอ",
+  "f_event": "Event",
+  "count_label": "ผลงาน",
+  "about_heading": "เกี่ยวกับ",
+  "about_text": "ตัวอย่าง: ผมเป็นช่างภาพและวิดีโอกราฟเฟอร์สายรถ ถ่ายทั้งงานสนามแข่ง รถสตรีท และอีเวนต์\nแก้ข้อความนี้ได้ในหน้าแอดมิน เมนู ข้อความและตั้งค่าเว็บ",
+  "about_points": [
+    "ตัวอย่าง: ถ่ายรูป วิดีโอ และโรลลิ่งช็อต",
+    "ตัวอย่าง: รับงานทั้งในและต่างจังหวัด"
+  ],
+  "contact_heading": "มีงานอยากถ่าย?\nคุยกันได้เลย",
+  "contact_button": "ทักผ่าน Instagram",
+  "pricing_cta": "สอบถามคิวและรายละเอียด",
+  "instagram_url": "https://instagram.com/underneath_media"
+}
