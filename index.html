@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Underneath Media — Car Photo & Video</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e9ebee;--ink:#15171b;--mute:#5d636c;--card:#dfe2e6;--red:#d3202b;--line:#c5c9cf;
+--font-d:"Barlow Condensed","Arial Narrow",sans-serif;--font-b:"DM Sans",system-ui,sans-serif}
+@media (prefers-color-scheme:dark){:root{--bg:#1c1e22;--ink:#eceef1;--mute:#9aa0a9;--card:#292c31;--line:#3a3e45}}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-b);line-height:1.5}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+header{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:14px clamp(16px,4vw,48px);background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px)}
+.logo{font:800 1.4rem var(--font-d);letter-spacing:.02em;text-decoration:none}
+.logo b{color:var(--red)}
+nav a{margin-left:20px;text-decoration:none;font-weight:500;color:var(--mute)}
+nav a:hover{color:var(--ink)}
+.hero{position:relative;margin:0 clamp(16px,4vw,48px);aspect-ratio:21/9;min-height:300px;border-radius:6px;overflow:hidden;background:#2a2d33;display:flex;align-items:flex-end;cursor:pointer}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.72),transparent 60%)}
+.hero-text{position:relative;z-index:1;padding:clamp(18px,4vw,44px);color:#fff}
+.hero h1{font:800 clamp(2.4rem,7vw,5.5rem)/.95 var(--font-d);text-transform:uppercase;max-width:14ch}
+.hero p{margin-top:10px;opacity:.85}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:28px clamp(16px,4vw,48px) 8px}
+.chip{border:1.5px solid var(--line);background:none;color:var(--ink);font:600 .95rem var(--font-b);padding:8px 18px;border-radius:99px;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.count{margin-left:auto;color:var(--mute);font-size:.9rem}
+.grid{columns:3 280px;column-gap:14px;padding:14px clamp(16px,4vw,48px) 60px}
+.item{break-inside:avoid;margin-bottom:14px;position:relative;border-radius:4px;overflow:hidden;background:var(--card);cursor:pointer;display:block;width:100%;border:0;padding:0;text-align:left;color:inherit}
+.item .ph,.item img{display:block;width:100%;aspect-ratio:var(--r,3/2);object-fit:cover;transition:transform .5s}
+.item:hover img,.item:hover .ph{transform:scale(1.04)}
+.ph{background:linear-gradient(135deg,var(--card),var(--line))}
+.cap{position:absolute;left:0;right:0;bottom:0;padding:34px 14px 12px;color:#fff;background:linear-gradient(to top,rgba(0,0,0,.7),transparent);font-weight:500;opacity:0;transition:opacity .25s}
+.item:hover .cap,.item:focus-visible .cap{opacity:1}
+.cap small{display:block;opacity:.75;font-weight:400}
+.tag{position:absolute;top:10px;left:10px;background:var(--red);color:#fff;font:700 .8rem var(--font-b);padding:3px 10px;border-radius:99px}
+.play{position:absolute;top:50%;left:50%;width:58px;height:58px;margin:-29px;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center}
+.play::before{content:"";border-left:16px solid var(--red);border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
+.empty{padding:60px clamp(16px,4vw,48px);color:var(--mute)}
+footer{padding:40px clamp(16px,4vw,48px) 60px;border-top:1px solid var(--line);display:flex;gap:24px;justify-content:space-between;flex-wrap:wrap}
+footer h2{font:800 clamp(2rem,5vw,3.4rem)/1 var(--font-d);text-transform:uppercase}
+.btn{display:inline-block;margin-top:14px;background:var(--red);color:#fff;font-weight:700;padding:12px 26px;border-radius:99px;text-decoration:none}
+dialog{border:0;background:transparent;max-width:none;max-height:none;width:100vw;height:100vh;padding:0}
+dialog::backdrop{background:rgba(8,9,11,.92)}
+.lb{display:grid;place-items:center;width:100%;height:100%;padding:56px 16px 16px}
+.lb img,.lb video,.lb iframe{max-width:100%;max-height:100%;border-radius:4px}
+.lb iframe{width:min(1100px,100%);aspect-ratio:16/9;border:0}
+.x{position:fixed;top:14px;right:18px;z-index:2;background:#fff;border:0;border-radius:50%;width:42px;height:42px;font-size:1.3rem;cursor:pointer}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:600px){.hero{aspect-ratio:4/5}nav a:not(:last-child){display:none}}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="#top">UNDERNEATH<b>.</b>MEDIA</a>
+  <nav><a href="#work">ผลงาน</a><a href="#contact">ติดต่อ</a></nav>
+</header>
+
+<main id="top">
+  <section class="hero" id="hero" tabindex="0" aria-label="ผลงานเด่น">
+    <div class="hero-text">
+      <h1 id="heroTitle">Cars, caught in motion</h1>
+      <p>ถ่ายรูปและวิดีโอรถ · Track · Street · Event</p>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="bar" role="group" aria-label="กรองผลงาน">
+      <button class="chip" data-f="all" aria-pressed="true">ทั้งหมด</button>
+      <button class="chip" data-f="photo" aria-pressed="false">รูปถ่าย</button>
+      <button class="chip" data-f="video" aria-pressed="false">วิดีโอ</button>
+      <button class="chip" data-f="event" aria-pressed="false">Event</button>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div>
+    <h2>มีงานอยากถ่าย?<br>คุยกันได้เลย</h2>
+    <a class="btn" href="https://instagram.com/underneath_media" target="_blank" rel="noopener">ทักผ่าน Instagram</a>
+  </div>
+</footer>
+
+<dialog id="dlg"><button class="x" id="close" aria-label="ปิด">×</button><div class="lb" id="lb"></div></dialog>
+
+<script>
+let WORKS = [];
+
+const LABEL = { photo:"รูป", video:"วิดีโอ", event:"Event" };
+const $ = id => document.getElementById(id);
+let filter = "all";
+
+function embed(url){
+  const yt = url.match(/(?:youtu\.be\/|v=)([\w-]{11})/);
+  if (yt) return `<iframe src="https://www.youtube.com/embed/${yt[1]}?autoplay=1" allow="autoplay;fullscreen" allowfullscreen></iframe>`;
+  const vm = url.match(/vimeo\.com\/(\d+)/);
+  if (vm) return `<iframe src="https://player.vimeo.com/video/${vm[1]}?autoplay=1" allow="autoplay;fullscreen" allowfullscreen></iframe>`;
+  if (/\.(mp4|webm|mov)$/i.test(url)) return `<video src="${url}" controls autoplay></video>`;
+  return `<p style="color:#fff">ยังไม่ได้ใส่ลิงก์วิดีโอ</p>`;
+}
+function thumb(w){
+  if(w.src) return w.src;
+  const m=(w.video||"").match(/(?:youtu\.be\/|v=)([\w-]{11})/);
+  return m?`https://img.youtube.com/vi/${m[1]}/hqdefault.jpg`:"";
+}
+function open(w){
+  $("lb").innerHTML = w.video ? embed(w.video)
+    : w.src ? `<img src="${w.src}" alt="${w.title}">` : `<p style="color:#fff">${w.title}</p>`;
+  $("dlg").showModal();
+}
+function render(){
+  const list = WORKS.filter(w => filter==="all" || w.type===filter);
+  $("count").textContent = list.length + " ผลงาน";
+  $("grid").innerHTML = "";
+  if(!list.length){ $("grid").innerHTML = '<p class="empty">ยังไม่มีผลงานในหมวดนี้</p>'; return; }
+  list.forEach(w=>{
+    const b = document.createElement("button");
+    b.className = "item"; const t=thumb(w); b.style.setProperty("--r", w.video?"16/9":(t?"auto":"3/2"));
+    b.setAttribute("aria-label", w.title);
+    b.innerHTML = (t ? `<img loading="lazy" src="${t}" alt="${w.title}">` : `<div class="ph"></div>`)
+      + `<span class="tag">${LABEL[w.type]}</span>` + (w.video ? '<span class="play"></span>' : "")
+      + `<span class="cap">${w.title}<small>${w.sub||""}</small></span>`;
+    b.onclick = () => open(w);
+    $("grid").appendChild(b);
+  });
+}
+document.querySelectorAll(".chip").forEach(c => c.onclick = () => {
+  filter = c.dataset.f;
+  document.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", x===c));
+  render();
+});
+function init(){
+const feat = WORKS.find(w=>w.featured) || WORKS[0];
+if (feat){
+  if (thumb(feat)) $("hero").insertAdjacentHTML("afterbegin", `<img src="${thumb(feat)}" alt="${feat.title}">`);
+  $("hero").onclick = () => open(feat);
+  $("hero").onkeydown = e => { if(e.key==="Enter") open(feat); };
+}
+render();
+}
+$("close").onclick = () => $("dlg").close();
+$("dlg").addEventListener("close", () => $("lb").innerHTML = "");
+$("dlg").addEventListener("click", e => { if(e.target.id==="dlg"||e.target.id==="lb") $("dlg").close(); });
+fetch("data/works.json").then(r=>r.json()).then(d=>{WORKS=d.works||[];init();})
+  .catch(()=>{$("grid").innerHTML='<p class="empty">โหลดผลงานไม่สำเร็จ</p>';});
+</script>
+</body>
+</html>
