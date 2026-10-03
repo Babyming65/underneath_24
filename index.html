@@ -41,6 +41,20 @@ nav a:hover{color:var(--ink)}
 .play{position:absolute;top:50%;left:50%;width:58px;height:58px;margin:-29px;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center}
 .play::before{content:"";border-left:16px solid var(--red);border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
 .empty{padding:60px clamp(16px,4vw,48px);color:var(--mute)}
+#pricing{padding:56px clamp(16px,4vw,48px) 20px;border-top:1px solid var(--line)}
+.pr-head h2{font:800 clamp(2rem,5vw,3.4rem)/1 var(--font-d);text-transform:uppercase}
+.pr-head p{margin-top:8px;color:var(--mute);max-width:60ch}
+.pr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:28px}
+.pk{border:1.5px solid var(--line);border-radius:6px;padding:24px;display:flex;flex-direction:column}
+.pk.hl{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.pk h3{font:700 1.15rem var(--font-b)}
+.pk .pc{font:800 3rem/1 var(--font-d);margin-top:14px}
+.pk .un{font-size:.9rem;opacity:.7;margin-top:4px}
+.pk ul{list-style:none;padding:0;margin:18px 0 22px;display:grid;gap:8px;flex:1}
+.pk li{padding-left:18px;position:relative}
+.pk li::before{content:"";position:absolute;left:0;top:.6em;width:8px;height:2px;background:var(--red)}
+.pk .btn{margin:0;text-align:center}
+.pr-note{margin-top:18px;color:var(--mute);white-space:pre-line;max-width:70ch}
 footer{padding:40px clamp(16px,4vw,48px) 60px;border-top:1px solid var(--line);display:flex;gap:24px;justify-content:space-between;flex-wrap:wrap}
 footer h2{font:800 clamp(2rem,5vw,3.4rem)/1 var(--font-d);text-transform:uppercase}
 .btn{display:inline-block;margin-top:14px;background:var(--red);color:#fff;font-weight:700;padding:12px 26px;border-radius:99px;text-decoration:none}
@@ -58,7 +72,7 @@ dialog::backdrop{background:rgba(8,9,11,.92)}
 <body>
 <header>
   <a class="logo" href="#top">UNDERNEATH<b>.</b>MEDIA</a>
-  <nav><a href="#work">ผลงาน</a><a href="#contact">ติดต่อ</a></nav>
+  <nav><a href="#work">ผลงาน</a><a href="#pricing">ราคา</a><a href="#contact">ติดต่อ</a></nav>
 </header>
 
 <main id="top">
@@ -80,6 +94,12 @@ dialog::backdrop{background:rgba(8,9,11,.92)}
     <div class="grid" id="grid"></div>
   </section>
 </main>
+
+<section id="pricing" hidden>
+  <div class="pr-head"><h2 id="prH"></h2><p id="prI"></p></div>
+  <div class="pr-grid" id="prG"></div>
+  <p class="pr-note" id="prN"></p>
+</section>
 
 <footer id="contact">
   <div>
@@ -152,6 +172,13 @@ $("dlg").addEventListener("close", () => $("lb").innerHTML = "");
 $("dlg").addEventListener("click", e => { if(e.target.id==="dlg"||e.target.id==="lb") $("dlg").close(); });
 fetch("data/works.json").then(r=>r.json()).then(d=>{WORKS=d.works||[];init();})
   .catch(()=>{$("grid").innerHTML='<p class="empty">โหลดผลงานไม่สำเร็จ</p>';});
+
+fetch("data/pricing.json").then(r=>r.json()).then(d=>{
+  const p=d.packages||[]; if(!p.length) return;
+  $("prH").textContent=d.heading||"เรทราคา"; $("prI").textContent=d.intro||""; $("prN").textContent=d.note||"";
+  $("prG").innerHTML=p.map(k=>`<div class="pk${k.highlight?" hl":""}"><h3>${k.name||""}</h3><div class="pc">${k.price||""}</div><div class="un">${k.unit||""}</div><ul>${(k.features||[]).map(f=>`<li>${f}</li>`).join("")}</ul><a class="btn" href="https://instagram.com/underneath_media" target="_blank" rel="noopener">สอบถามคิวและรายละเอียด</a></div>`).join("");
+  $("pricing").hidden=false;
+}).catch(()=>{});
 </script>
 </body>
 </html>
