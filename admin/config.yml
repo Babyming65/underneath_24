@@ -43,3 +43,21 @@ collections:
               - { name: src, label: รูป (ถ้าเป็นวิดีโอ YouTube ไม่ต้องใส่ก็ได้), widget: image, required: false }
               - { name: video, label: ลิงก์วิดีโอ (YouTube / Vimeo), widget: string, required: false }
               - { name: featured, label: ขึ้นเป็นภาพใหญ่หน้าแรก, widget: boolean, default: false, required: false }
+      - name: pricing
+        label: เรทราคา
+        file: data/pricing.json
+        fields:
+          - { name: heading, label: หัวข้อ, widget: string, default: เรทราคา }
+          - { name: intro, label: ข้อความอธิบายใต้หัวข้อ, widget: text, required: false }
+          - name: packages
+            label: แพ็กเกจ
+            label_singular: แพ็กเกจ
+            widget: list
+            summary: "{{fields.name}}"
+            fields:
+              - { name: name, label: ชื่อแพ็กเกจ, widget: string }
+              - { name: price, label: ราคา (พิมพ์เป็นข้อความได้ เช่น 3,500 หรือ สอบถาม), widget: string }
+              - { name: unit, label: หน่วย (เช่น บาท / คัน), widget: string, required: false }
+              - { name: features, label: รายการที่ได้รับ (กดเพิ่มทีละบรรทัด), widget: list, required: false }
+              - { name: highlight, label: เน้นเป็นแพ็กเกจแนะนำ, widget: boolean, default: false, required: false }
+          - { name: note, label: หมายเหตุท้ายตาราง (เช่น มัดจำ ค่าเดินทาง), widget: text, required: false }
