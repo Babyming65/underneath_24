@@ -11,12 +11,12 @@
       "featured": true
     },
     {
-      "title": "ตัวอย่าง: Car meet",
+      "title": "ตัวอย่าง: Photo Shoot",
       "title_en": "",
-      "type": "event",
-      "sub": "ลบอันนี้ได้",
+      "type": "photo",
+      "sub": "",
       "sub_en": "",
-      "src": "",
+      "src": "/images/639489074_17938084575154978_8474629177104141483_n.webp",
       "video": "",
       "featured": false
     },
