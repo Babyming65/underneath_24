@@ -1,7 +1,32 @@
 {
   "works": [
     {
-      "title": "BMW_M4_BANGKOK1",
+      "title": "HFTH25",
+      "title_en": "HFTH25",
+      "type": "photo",
+      "sub": "",
+      "sub_en": "",
+      "src": "/images/DSC00117.webp",
+      "album": [
+        "/images/DSC00239.webp",
+        "/images/DSC00032.webp",
+        "/images/DSC00163.webp",
+        "/images/DSC00015.webp",
+        "/images/DSC00050.webp",
+        "/images/DSC00077.webp",
+        "/images/DSC00084.webp",
+        "/images/DSC00100.webp",
+        "/images/DSC00091.webp",
+        "/images/DSC00182.webp",
+        "/images/DSC00247.webp",
+        "/images/DSC00174.webp",
+        "/images/DSC00198.webp"
+      ],
+      "video": "",
+      "featured": false
+    },
+    {
+      "title": "BMW_M4_BANGKOK",
       "title_en": "BMW_M4_BANGKOK",
       "type": "photo",
       "sub": "",
