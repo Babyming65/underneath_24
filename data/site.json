@@ -17,9 +17,7 @@
   "about_heading": "เกี่ยวกับพวกเรา",
   "about_text": "UNDERNEATH MEDIA\nAutomotive media driven by passion, speed, and visual storytelling.\n\nเราคือกลุ่มคนที่หลงใหลในรถยนต์ มอเตอร์สปอร์ต และวัฒนธรรมที่อยู่รอบตัวมัน ถ่ายทอดเรื่องราวผ่านภาพถ่าย วิดีโอ และงาน Visual Production\n\nเราเชื่อว่ารถหนึ่งคันไม่ได้มีแค่รูปลักษณ์ แต่มีทั้งตัวตน เสียง ความเร็ว ผู้คน และเรื่องราวที่เกิดขึ้นระหว่างทาง เราจึงมุ่งสร้างภาพที่ไม่เพียงแค่ “เห็นรถ” แต่ทำให้คนดูรู้สึกถึงบรรยากาศและช่วงเวลานั้นได้จริง\n\nFrom the streets to the racetrack, we capture the machines, the people, and everything UNDERNEATH.",
   "about_image": "/images/IMG_8853.webp",
-  "about_points": [
-    "ตัวอย่าง: รับงานทั้งในและต่างจังหวัด"
-  ],
+  "about_points": [],
   "pricing_cta": "สอบถามคิวและรายละเอียด",
   "contact_heading": "มีงานอยากถ่าย?\nคุยกันได้เลย",
   "contact_button": "ทักผ่าน Instagram",
@@ -36,7 +34,7 @@
   "f_event_en": "",
   "count_label_en": "",
   "about_heading_en": "ABOUT US",
-  "about_text_en": "UNDERNEATH MEDIA\nAutomotive media driven by passion, speed, and visual storytelling.\n\nเราคือกลุ่มคนที่หลงใหลในรถยนต์ มอเตอร์สปอร์ต และวัฒนธรรมที่อยู่รอบตัวมัน ถ่ายทอดเรื่องราวผ่านภาพถ่าย วิดีโอ และงาน Visual Production\n\nเราเชื่อว่ารถหนึ่งคันไม่ได้มีแค่รูปลักษณ์ แต่มีทั้งตัวตน เสียง ความเร็ว ผู้คน และเรื่องราวที่เกิดขึ้นระหว่างทาง เราจึงมุ่งสร้างภาพที่ไม่เพียงแค่ “เห็นรถ” แต่ทำให้คนดูรู้สึกถึงบรรยากาศและช่วงเวลานั้นได้จริง\n\nFrom the streets to the racetrack, we capture the machines, the people, and everything UNDERNEATH.",
+  "about_text_en": "UNDERNEATH MEDIA\nAutomotive media driven by passion, speed, and visual storytelling.\n\nWe are a creative media collective passionate about cars, motorsport, and the culture that surrounds them. Through photography, filmmaking, and visual production, we capture the stories behind every machine and every moment.\n\nWe believe a car is more than just its appearance. It has character, sound, speed, people, and stories built along the way. Our goal is to create visuals that go beyond simply showing a car — visuals that capture the atmosphere, emotion, and moments behind it.\n\nFrom the streets to the racetrack, we capture the machines, the people, and everything UNDERNEATH.",
   "about_points_en": [],
   "pricing_cta_en": "",
   "contact_heading_en": "",
