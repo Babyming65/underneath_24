@@ -1,0 +1,45 @@
+backend:
+  name: github
+  repo: Babyming65/underneath_24
+  branch: main
+
+media_folder: images
+public_folder: /images
+
+media_libraries:
+  default:
+    config:
+      transformations:
+        raster_image:
+          format: webp
+          quality: 85
+          width: 2000
+          height: 2000
+
+collections:
+  - name: portfolio
+    label: ผลงาน
+    files:
+      - name: works
+        label: ผลงานทั้งหมด
+        file: data/works.json
+        fields:
+          - name: works
+            label: รายการผลงาน
+            label_singular: ผลงาน
+            widget: list
+            add_to_top: true
+            summary: "{{fields.title}}"
+            fields:
+              - { name: title, label: ชื่อผลงาน, widget: string }
+              - name: type
+                label: หมวด
+                widget: select
+                options:
+                  - { label: รูปถ่าย, value: photo }
+                  - { label: วิดีโอ, value: video }
+                  - { label: Event, value: event }
+              - { name: sub, label: คำอธิบายสั้นๆ (เช่น สถานที่), widget: string, required: false }
+              - { name: src, label: รูป (ถ้าเป็นวิดีโอ YouTube ไม่ต้องใส่ก็ได้), widget: image, required: false }
+              - { name: video, label: ลิงก์วิดีโอ (YouTube / Vimeo), widget: string, required: false }
+              - { name: featured, label: ขึ้นเป็นภาพใหญ่หน้าแรก, widget: boolean, default: false, required: false }
