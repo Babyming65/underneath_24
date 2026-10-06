@@ -1,19 +1,14 @@
 {
   "categories": [
     {
-      "id": "photo",
       "name": "รูปถ่าย",
-      "name_en": "Photos"
+      "name_en": "Photos",
+      "id": "photo"
     },
     {
-      "id": "video",
       "name": "วิดีโอ",
-      "name_en": "Videos"
-    },
-    {
-      "id": "event",
-      "name": "Event",
-      "name_en": "Events"
+      "name_en": "Videos",
+      "id": "video"
     }
   ]
 }
