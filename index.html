@@ -128,6 +128,7 @@ nav{display:flex;align-items:center}
 .nv.p{left:16px}.nv.n{right:16px}
 .logo.has-img{display:block;line-height:0}
 .logo img{height:var(--lh,36px);width:auto;display:block}
+.chips{display:contents}
 </style>
 </head>
 <body>
@@ -146,10 +147,7 @@ nav{display:flex;align-items:center}
 
   <section id="work">
     <div class="bar" role="group" aria-label="กรองผลงาน">
-      <button class="chip" data-f="all" data-t="f_all" aria-pressed="true">ทั้งหมด</button>
-      <button class="chip" data-f="photo" data-t="f_photo" aria-pressed="false">รูปถ่าย</button>
-      <button class="chip" data-f="video" data-t="f_video" aria-pressed="false">วิดีโอ</button>
-      <button class="chip" data-f="event" data-t="f_event" aria-pressed="false">Event</button>
+      <span id="chips" class="chips"></span>
       <span class="count" id="count"></span>
       <span class="arrows" id="gridArrows"><button type="button" data-sl="p" data-for="grid">&#8249;</button><button type="button" data-sl="n" data-for="grid">&#8250;</button></span>
     </div>
@@ -181,7 +179,7 @@ nav{display:flex;align-items:center}
 <dialog id="dlg"><button class="x" id="close" aria-label="ปิด">×</button><div class="lb" id="lb"></div></dialog>
 
 <script>
-let WORKS=[], PR={}, filter="all", lang="th";
+let WORKS=[], PR={}, CATS=[], filter="all", lang="th";
 try{ lang=localStorage.getItem("lang")==="en"?"en":"th"; }catch(e){}
 const $ = id => document.getElementById(id);
 const S = {};
@@ -303,15 +301,29 @@ function applyText(){
     observe();
   }
 }
-document.querySelectorAll(".chip").forEach(c => c.onclick = () => {
-  filter = c.dataset.f;
-  document.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", x===c));
-  render();
-});
+const CAT_DEF=[{id:"photo",name:"รูปถ่าย",name_en:"Photos"},{id:"video",name:"วิดีโอ",name_en:"Videos"},{id:"event",name:"Event",name_en:"Events"}];
+function catsInUse(){
+  const have=new Set(WORKS.map(w=>w.type).filter(Boolean)), out=[];
+  (CATS.length?CATS:CAT_DEF).forEach(c=>{ if(have.has(c.id)){ out.push(c); have.delete(c.id); } });
+  have.forEach(id=>out.push({id,name:id,name_en:id}));
+  return out;
+}
+function buildChips(){
+  const bar=$("chips"), cs=catsInUse();
+  if(filter!=="all" && !cs.some(c=>c.id===filter)) filter="all";
+  bar.innerHTML="";
+  [{id:"all",label:T("f_all")}].concat(cs.map(c=>({id:c.id,label:L(c,"name")}))).forEach(c=>{
+    const b=document.createElement("button");
+    b.type="button"; b.className="chip"; b.dataset.f=c.id; b.textContent=c.label;
+    b.setAttribute("aria-pressed", c.id===filter);
+    b.onclick=()=>{ filter=c.id; bar.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed", x===b)); render(); };
+    bar.appendChild(b);
+  });
+}
 $("lang").onclick = () => {
   lang = lang==="en" ? "th" : "en";
   try{ localStorage.setItem("lang",lang); }catch(e){}
-  applyText(); render(); buildPricing();
+  applyText(); buildChips(); render(); buildPricing();
 };
 function init(){
   const feat = WORKS.find(w=>w.featured) || WORKS[0];
@@ -320,7 +332,7 @@ function init(){
     $("hero").onclick = () => open(feat);
     $("hero").onkeydown = e => { if(e.key==="Enter") open(feat); };
   }
-  render();
+  buildChips(); render();
 }
 $("close").onclick = () => $("dlg").close();
 $("dlg").addEventListener("close", () => { $("lb").innerHTML = ""; alStep=null; });
@@ -330,7 +342,7 @@ $("lb").addEventListener("touchstart", e => { tx0=e.changedTouches[0].clientX; }
 $("lb").addEventListener("touchend", e => { if(!alStep) return; const d=e.changedTouches[0].clientX-tx0; if(Math.abs(d)>50) alStep(d<0?1:-1); });
 $("dlg").addEventListener("click", e => { if(e.target.id==="dlg"||e.target.id==="lb") $("dlg").close(); });
 applyText();
-const siteP = fetch("data/site.json").then(r=>r.json()).then(d=>Object.assign(S,d)).catch(()=>{});
+const siteP = fetch("data/site.json").then(r=>r.json()).then(d=>Object.assign(S,d)).catch(()=>{}).then(()=>fetch("data/categories.json")).then(r=>r.json()).then(d=>{ CATS=d.categories||[]; }).catch(()=>{});
 siteP.then(()=>{ applyText(); return fetch("data/works.json"); }).then(r=>r.json()).then(d=>{ WORKS=d.works||[]; init(); })
   .catch(()=>{ $("grid").innerHTML=`<p class="empty">${T("fail")}</p>`; });
 siteP.then(()=>fetch("data/pricing.json")).then(r=>r.json()).then(d=>{ PR=d; buildPricing(); }).catch(()=>{});
